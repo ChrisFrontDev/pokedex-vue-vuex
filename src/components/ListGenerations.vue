@@ -3,9 +3,11 @@
     <div v-if="generationsList">
       <ul>
         <li
-          class=""
           v-for="generation in generationsList.results"
-          :key="generation.url">
+          :key="generation.url"
+          @click="handleGoToDetails(generation)"
+          class=""
+        >
           <h3>{{ generation.name }}</h3>
         </li>
       </ul>
@@ -20,6 +22,9 @@ export default {
   name: 'ListGenerations',
   methods: {
     ...mapActions(['fetchGenerations']),
+    handleGoToDetails: function(generation) {
+      this.$router.push(`/generations/${generation.name}`);
+    },
   },
   computed: mapGetters(['generationsList']),
   created() {

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>select your game:</h1>
+    <h1>Select Your Game Generation:</h1>
     <ListGenerations />
   </div>
 </template>

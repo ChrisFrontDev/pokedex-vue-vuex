@@ -1,7 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
 import Home from '../views/Home.vue';
 import NotFound from '../views/NotFound.vue';
+import Pokedex from '../views/Pokedex.vue';
+
+import GenerationDetails from '../views/GenerationDetail.vue';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -14,6 +19,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/generations/:generationName/',
+    name: 'GenerationDetails',
+    component: GenerationDetails,
+  },
+  {
+    path: '/generations/:generationName/pokedex',
+    name: 'Pokedex',
+    component: Pokedex,
   },
   {
     path: '/about',
