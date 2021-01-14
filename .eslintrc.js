@@ -14,7 +14,6 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     'global-require': 'warn',
     'no-prototype-builtins': 'warn',
-    'no-shadow': 'warn',
     'no-cond-assign': ['warn', 'always'],
     'no-undef': ['error', { typeof: true }],
   }
