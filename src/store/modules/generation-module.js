@@ -1,5 +1,5 @@
+// import axios from 'axios';
 import { api } from '../../api.js';
-
 const state = {
   generations: [],
   generation: {},
@@ -8,6 +8,9 @@ const state = {
 const getters = {
   generationsList: state => state.generations,
   generation: state => state.generation,
+  getPokemonByName: state => name => {
+    return state.generation?.pokemons?.find(pokemon => pokemon.name === name);
+  },
 };
 
 const actions = {
@@ -18,8 +21,21 @@ const actions = {
   },
   async fetchOneGeneration({ commit }, name) {
     const response = await api.get(`/generation/${name}`);
-    console.log(response.data);
-    commit('setGeneration', response.data);
+    // console.log('response', response.data);
+
+    let pokemons = await Promise.all(
+      response.data.pokemon_species.map(async pokemon => {
+        // console.log(pokemon);
+        const pokemonId = pokemon.url.split('/')[6];
+        let pokemonResponse = await api.get(`/pokemon/${pokemonId}`);
+        return pokemonResponse.data;
+      }),
+    );
+
+    commit('setGeneration', {
+      ...response.data,
+      pokemons: pokemons.sort((a, b) => a.order - b.order),
+    });
   },
 };
 

@@ -4,7 +4,7 @@
     <h2>What Pokémon <br />are you looking for?</h2>
     <div @click="handleGoToPokedex(generation.name)">
       Pokédex
-      {{ generation.pokemon_species ? generation.pokemon_species.length : 0 }}
+      {{ generation.pokemons ? generation.pokemons.length : 0 }}
     </div>
     <br />
     <!-- <div>moves {{ generation.moves.length }}</div> -->
