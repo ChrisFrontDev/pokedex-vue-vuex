@@ -25,10 +25,13 @@ const actions = {
 
     let pokemons = await Promise.all(
       response.data.pokemon_species.map(async pokemon => {
-        // console.log(pokemon);
         const pokemonId = pokemon.url.split('/')[6];
         let pokemonResponse = await api.get(`/pokemon/${pokemonId}`);
-        return pokemonResponse.data;
+
+        let fetchPokemonSpecie = await api.get(
+          pokemonResponse.data.species.url,
+        );
+        return { ...pokemonResponse.data, species: fetchPokemonSpecie.data };
       }),
     );
 

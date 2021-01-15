@@ -1,25 +1,30 @@
 <template>
   <div class="pokedex">
     <h1>Pokedex</h1>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center">
+    <div class="container">
       <div
         v-for="pokemon in generation.pokemons"
-        style="border:1px solid gray;margin:6px;min-width:340px"
+        style="min-width:340px"
         :key="pokemon.url"
       >
         <router-link :to="`pokedex/pokemon/${pokemon.name}`">
-          <div style="display:flex;flex-wrap:wrap;justify-content:center">
+          <div :class="`${pokemon.species.color.name} card`">
             <div>
               <h2>{{ pokemon.name }}</h2>
-              <h3 v-for="type in pokemon.types" :key="type.name">
-                {{ type.type.name }}
-              </h3>
+              <div
+                class="type-tag"
+                v-for="type in pokemon.types"
+                :key="type.name"
+              >
+                <h3>
+                  {{ type.type.name }}
+                </h3>
+              </div>
             </div>
             <img
               :src="
                 `${pokemon.sprites.other['official-artwork'].front_default}`
               "
-              style="width:160px"
             />
           </div>
         </router-link>
