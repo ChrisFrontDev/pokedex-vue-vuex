@@ -1,5 +1,5 @@
 <template>
-  <div class="generation">
+  <div v-if="!isLoading" class="generation">
     <h1>{{ generation.name }}</h1>
     <h2>What Pokémon <br />are you looking for?</h2>
     <div @click="handleGoToPokedex(generation.name)">
@@ -7,20 +7,22 @@
       {{ generation.pokemons ? generation.pokemons.length : 0 }}
     </div>
     <br />
-    <!-- <div>moves {{ generation.moves.length }}</div> -->
+  </div>
+  <div v-else>
+    <Loading />
   </div>
 </template>
 
 <script>
-// import ListGenerations from '@/components/ListGenerations.vue';
 import { mapGetters, mapActions } from 'vuex';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'GenerationDetails',
   components: {
-    // ListGenerations,
+    Loading,
   },
-  computed: mapGetters(['generation']),
+  computed: mapGetters(['generation', 'isLoading']),
   methods: {
     ...mapActions(['fetchOneGeneration']),
     handleGoToPokedex: function(name) {

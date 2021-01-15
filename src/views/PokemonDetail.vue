@@ -1,5 +1,5 @@
 <template>
-  <div :class="`pokemon ${pokemon.species.color.name}`">
+  <div v-if="!isLoading" :class="`pokemon ${pokemon.species.color.name}`">
     <h1>{{ pokemon && pokemon.name }}</h1>
     <div class="type-list">
       <div class="type-tag" v-for="type in pokemon.types" :key="type.name">
@@ -37,18 +37,21 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <Loading />
+  </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 
 // @ is an alias to /src
-// import ListGenerations from '@/components/ListGenerations.vue';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'Pokemon',
   components: {
-    // ListGenerations,
+    Loading,
   },
   methods: {
     ...mapActions(['fetchOneGeneration']),
@@ -61,7 +64,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getPokemonByName', 'generation']),
+    ...mapGetters(['getPokemonByName', 'generation', 'isLoading']),
     pokemon: function() {
       return this.getPokemonByName(this.$route.params.pokemonName);
     },

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="container" v-if="generationsList">
+    <div class="container" v-if="generations">
       <div
         class="card"
-        v-for="generation in generationsList.results"
+        v-for="generation in generations"
         :key="generation.url"
         @click="handleGoToDetails(generation)"
         style="flex-direction:column"
@@ -16,12 +16,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-
 export default {
   name: 'ListGenerations',
+  props: ['generations'],
   methods: {
-    ...mapActions(['fetchGenerations']),
     handleGoToDetails: function(generation) {
       this.$router.push(`/generations/${generation.name}`);
     },
@@ -29,10 +27,6 @@ export default {
       var images = require.context('../assets/', false, /\.png$/);
       return images('./' + name + '.png');
     },
-  },
-  computed: mapGetters(['generationsList']),
-  created() {
-    this.fetchGenerations();
   },
 };
 </script>

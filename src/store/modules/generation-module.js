@@ -3,6 +3,7 @@ import { api } from '../../api.js';
 const state = {
   generations: [],
   generation: {},
+  isLoading: true,
 };
 
 const getters = {
@@ -11,15 +12,19 @@ const getters = {
   getPokemonByName: state => name => {
     return state.generation?.pokemons?.find(pokemon => pokemon.name === name);
   },
+  isLoading: state => state.isLoading,
 };
 
 const actions = {
   async fetchGenerations({ commit }) {
+    commit('setIsLoading', true);
     const response = await api.get('/generation/');
-    console.log(response.data);
     commit('setGenerations', response.data);
+    commit('setIsLoading', false);
   },
   async fetchOneGeneration({ commit }, name) {
+    commit('setIsLoading', true);
+
     const response = await api.get(`/generation/${name}`);
     // console.log('response', response.data);
 
@@ -39,12 +44,14 @@ const actions = {
       ...response.data,
       pokemons: pokemons.sort((a, b) => a.order - b.order),
     });
+    commit('setIsLoading', false);
   },
 };
 
 const mutations = {
   setGenerations: (state, generations) => (state.generations = generations),
   setGeneration: (state, generation) => (state.generation = generation),
+  setIsLoading: (state, loadStatus) => (state.isLoading = loadStatus),
 };
 
 export default {

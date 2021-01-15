@@ -1,5 +1,5 @@
 <template>
-  <div class="pokedex">
+  <div v-if="!isLoading" class="pokedex">
     <h1>Pokedex</h1>
     <div class="container">
       <div
@@ -31,23 +31,24 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <Loading />
+  </div>
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue';
 import { mapGetters, mapActions } from 'vuex';
-
-// @ is an alias to /src
-// import ListGenerations from '@/components/ListGenerations.vue';
 
 export default {
   name: 'Pokedex',
   components: {
-    // ListGenerations,
+    Loading,
   },
   methods: {
     ...mapActions(['fetchOneGeneration']),
   },
-  computed: mapGetters(['generation']),
+  computed: mapGetters(['generation', 'isLoading']),
   created() {
     if (
       Object.keys(this.generation).length === 0 &&
