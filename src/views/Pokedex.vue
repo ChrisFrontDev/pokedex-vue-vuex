@@ -53,7 +53,6 @@ export default {
       Object.keys(this.generation).length === 0 &&
       this.generation.constructor === Object
     ) {
-      console.log('TOBA');
       this.fetchOneGeneration(this.$route.params.generationName);
     }
   },

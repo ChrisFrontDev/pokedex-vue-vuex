@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div v-if="generationsList">
-      <ul>
-        <li
-          v-for="generation in generationsList.results"
-          :key="generation.url"
-          @click="handleGoToDetails(generation)"
-          class=""
-        >
-          <h3>{{ generation.name }}</h3>
-        </li>
-      </ul>
+    <div class="container" v-if="generationsList">
+      <div
+        class="card"
+        v-for="generation in generationsList.results"
+        :key="generation.url"
+        @click="handleGoToDetails(generation)"
+        style="flex-direction:column"
+      >
+        <h3>{{ generation.name }}</h3>
+        <img :src="getImgUrl(generation.name)" />
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +25,10 @@ export default {
     handleGoToDetails: function(generation) {
       this.$router.push(`/generations/${generation.name}`);
     },
+    getImgUrl(name) {
+      var images = require.context('../assets/', false, /\.png$/);
+      return images('./' + name + '.png');
+    },
   },
   computed: mapGetters(['generationsList']),
   created() {
@@ -34,16 +38,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-</style>
+<style scoped lang="scss"></style>
