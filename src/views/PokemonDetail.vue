@@ -56,7 +56,6 @@ export default {
   methods: {
     ...mapActions(['fetchOneGeneration']),
     findDescription: function(flavorTextEntries) {
-      console.log(flavorTextEntries);
       const description = flavorTextEntries.find(
         entry => entry.language.name === 'en',
       );

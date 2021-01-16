@@ -55,8 +55,6 @@ export default {
   },
   computed: mapGetters(['generation', 'isLoading']),
   created() {
-    console.log(this.generation.name);
-    console.log(this.$route.params.generationName);
     if (
       this.generation.constructor === Object &&
       this.$route.params.generationName !== this.generation.name
