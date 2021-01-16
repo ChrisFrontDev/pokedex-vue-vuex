@@ -5,7 +5,7 @@
         class="card"
         v-for="generation in generations"
         :key="generation.url"
-        @click="handleGoToDetails(generation)"
+        @click="handleGoToPokedex(generation)"
         style="flex-direction:column"
       >
         <h3>{{ generation.name }}</h3>
@@ -20,8 +20,8 @@ export default {
   name: 'ListGenerations',
   props: ['generations'],
   methods: {
-    handleGoToDetails: function(generation) {
-      this.$router.push(`/generations/${generation.name}`);
+    handleGoToPokedex: function(generation) {
+      this.$router.push(`/generations/${generation.name}/pokedex`);
     },
     getImgUrl(name) {
       var images = require.context('../assets/', false, /\.png$/);

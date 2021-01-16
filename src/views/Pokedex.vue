@@ -2,33 +2,38 @@
   <div v-if="!isLoading" class="pokedex">
     <h1>Pokedex</h1>
     <div class="container">
-      <div
+      <router-link
+        :to="`pokedex/pokemon/${pokemon.name}`"
         v-for="pokemon in generation.pokemons"
-        style="min-width:340px"
         :key="pokemon.url"
       >
-        <router-link :to="`pokedex/pokemon/${pokemon.name}`">
-          <div :class="`${pokemon.species.color.name} card`">
-            <div>
-              <h2>{{ pokemon.name }}</h2>
-              <div
-                class="type-tag"
-                v-for="type in pokemon.types"
-                :key="type.name"
-              >
-                <h3>
-                  {{ type.type.name }}
-                </h3>
-              </div>
+        <div
+          :class="`${pokemon.species.color.name} card`"
+          style="min-width:340px"
+        >
+          <div>
+            <h2>{{ pokemon.name }}</h2>
+            <div
+              class="type-tag"
+              v-for="type in pokemon.types"
+              :key="type.name"
+            >
+              <h3>
+                {{ type.type.name }}
+              </h3>
             </div>
-            <img
-              :src="
-                `${pokemon.sprites.other['official-artwork'].front_default}`
-              "
-            />
           </div>
-        </router-link>
-      </div>
+          <img
+            :src="
+              `${
+                pokemon.sprites.other['official-artwork'].front_default
+                  ? pokemon.sprites.other['official-artwork'].front_default
+                  : '../assets/not-found.png'
+              }`
+            "
+          />
+        </div>
+      </router-link>
     </div>
   </div>
   <div v-else>
@@ -50,9 +55,11 @@ export default {
   },
   computed: mapGetters(['generation', 'isLoading']),
   created() {
+    console.log(this.generation.name);
+    console.log(this.$route.params.generationName);
     if (
-      Object.keys(this.generation).length === 0 &&
-      this.generation.constructor === Object
+      this.generation.constructor === Object &&
+      this.$route.params.generationName !== this.generation.name
     ) {
       this.fetchOneGeneration(this.$route.params.generationName);
     }

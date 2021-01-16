@@ -12,6 +12,13 @@
   outline: 0;
   text-decoration: none;
 }
+button {
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: inherit;
+}
 
 h1 {
   padding: 24px;
